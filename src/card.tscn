@@ -1,0 +1,80 @@
+[gd_scene load_steps=7 format=3 uid="uid://0oobue31mfry"]
+
+[ext_resource type="Script" path="res://src/card.gd" id="1_33e7p"]
+[ext_resource type="PackedScene" uid="uid://cyq3boddra5ph" path="res://src/node_3d.tscn" id="2_2qcqi"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_50rmf"]
+size = Vector3(150, 200, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_lx2ye"]
+outline_size = 1
+outline_color = Color(0, 0, 0, 1)
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="World3D" id="World3D_d8b06"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fildl"]
+size = Vector2(150, 200)
+
+[node name="Card" type="Node2D"]
+script = ExtResource("1_33e7p")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+modulate = Color(0.190762, 0.190762, 0.190762, 1)
+mesh = SubResource("BoxMesh_50rmf")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -75.0
+offset_top = -100.0
+offset_right = 75.0
+offset_bottom = 100.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Title" type="Label" parent="UI/VBoxContainer"]
+layout_mode = 2
+text = "Card Title"
+label_settings = SubResource("LabelSettings_lx2ye")
+horizontal_alignment = 1
+
+[node name="Image" type="SubViewportContainer" parent="UI/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="SubViewport" type="SubViewport" parent="UI/VBoxContainer/Image"]
+world_3d = SubResource("World3D_d8b06")
+handle_input_locally = false
+size = Vector2i(140, 140)
+render_target_update_mode = 4
+
+[node name="Node3D" parent="UI/VBoxContainer/Image/SubViewport" instance=ExtResource("2_2qcqi")]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Cost" type="Label" parent="UI/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 2
+text = " Cost"
+
+[node name="Power" type="Label" parent="UI/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "Power "
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_fildl")
+
+[connection signal="gui_input" from="UI" to="." method="_on_ui_gui_input"]
