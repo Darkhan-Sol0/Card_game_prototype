@@ -1,7 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://0oobue31mfry"]
+[gd_scene load_steps=6 format=3 uid="uid://0oobue31mfry"]
 
 [ext_resource type="Script" path="res://src/card.gd" id="1_33e7p"]
-[ext_resource type="PackedScene" uid="uid://cyq3boddra5ph" path="res://src/node_3d.tscn" id="2_2qcqi"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_50rmf"]
 size = Vector3(150, 200, 1)
@@ -56,8 +55,6 @@ handle_input_locally = false
 size = Vector2i(140, 140)
 render_target_update_mode = 4
 
-[node name="Node3D" parent="UI/VBoxContainer/Image/SubViewport" instance=ExtResource("2_2qcqi")]
-
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/VBoxContainer"]
 layout_mode = 2
 alignment = 1
@@ -78,3 +75,4 @@ text = "Power "
 shape = SubResource("RectangleShape2D_fildl")
 
 [connection signal="gui_input" from="UI" to="." method="_on_ui_gui_input"]
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

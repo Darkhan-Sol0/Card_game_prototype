@@ -2,46 +2,60 @@ extends Node2D
 
 @onready var ui = $UI
 @onready var ui_vis = $UI/VBoxContainer
+@onready var coll: CollisionShape2D = $Area2D/CollisionShape2D
+
 
 var selected : bool = false
 var flip : bool = true
 
-var last_pos : Vector2
 var touch_place : Vector2
+var card_pos: Vector2
+var card_def_pos: Vector2
 
 func _ready() -> void:
-	last_pos = get_viewport().size / 2
+	coll.disabled = true
 
 func _process(delta: float) -> void:
-	z_index = global_position.x
-	position.x = lerpf(position.x, last_pos.x, delta * 20)
-	position.y = lerpf(position.y, last_pos.y, delta * 20)
-	
-	if position.x <= 75:
-		position.x = 75
-	if position.y <= 100:
-		position.y = 100
-	if position.x >= get_viewport().size.x - 75:
-		position.x = get_viewport().size.x - 75
-	if position.y >= get_viewport().size.y - 100:
-		position.y = get_viewport().size.y - 100
-	
+	card_movement(delta)
 	ui_vis.visible = flip
-	
-	if selected:
-		get_last_pos()
-		z_index = 4000
 
-func get_last_pos():
-	last_pos = get_global_mouse_position() - touch_place
+func get_last_pos(selected = false) -> Vector2:
+	if selected == true:
+		z_index = 4000
+		card_pos = get_global_mouse_position() - touch_place
+	else:
+		z_index = 0
+		card_pos = card_def_pos
+	return card_pos
+
+func card_movement(delta: float) -> void:
+	var card_pos = get_last_pos(selected)
+	global_position.x = lerpf(global_position.x, card_pos.x, delta * 20)
+	global_position.y = lerpf(global_position.y, card_pos.y, delta * 20)
+	
+	if global_position.x <= 75:
+		global_position.x = 75
+	if global_position.y <= 100:
+		global_position.y = 100
+	if global_position.x >= get_viewport().size.x - 75:
+		global_position.x = get_viewport().size.x - 75
+	if global_position.y >= get_viewport().size.y - 100:
+		global_position.y = get_viewport().size.y - 100
 
 func _on_ui_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			selected = true
+			coll.disabled = true
 			touch_place = get_local_mouse_position()
-		else:
+		else: 
 			selected = false
+			coll.disabled = false
 	
 		if event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
 			flip = !flip
+
+
+func _on_area_2d_area_entered(area: Area2D) -> void:
+	if area.get_parent().name == "Table":
+		queue_free()

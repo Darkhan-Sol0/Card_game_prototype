@@ -1,8 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://chyf5prk2kjk4"]
+[gd_scene load_steps=4 format=3 uid="uid://chyf5prk2kjk4"]
 
-[ext_resource type="PackedScene" uid="uid://0oobue31mfry" path="res://src/card.tscn" id="1_5iqsi"]
+[ext_resource type="PackedScene" uid="uid://dey2o0y807tu0" path="res://src/hand.tscn" id="2_fpsol"]
+[ext_resource type="PackedScene" uid="uid://dcwms7ifiyyuc" path="res://src/deck.tscn" id="2_mp23i"]
+[ext_resource type="PackedScene" uid="uid://bf6qag1oev6s1" path="res://src/table.tscn" id="3_s4ceh"]
 
 [node name="Main" type="Node"]
 
-[node name="Card" parent="." instance=ExtResource("1_5iqsi")]
-position = Vector2(321, 296)
+[node name="Deck" parent="." instance=ExtResource("2_mp23i")]
+position = Vector2(1761, 509)
+Hand_path = NodePath("../Hand")
+
+[node name="Table" parent="." instance=ExtResource("3_s4ceh")]
+position = Vector2(966, 507)
+
+[node name="Hand" parent="." instance=ExtResource("2_fpsol")]
+position = Vector2(960, 966)

@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3 uid="uid://dcwms7ifiyyuc"]
+
+[ext_resource type="Script" path="res://src/deck.gd" id="1_hh6oe"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_e71xg"]
+size = Vector3(150, 200, 0)
+
+[node name="Deck" type="Node2D"]
+script = ExtResource("1_hh6oe")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+modulate = Color(0.0687983, 0.0687983, 0.0687983, 1)
+mesh = SubResource("BoxMesh_e71xg")
+
+[node name="Label" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Card"
+horizontal_alignment = 1
+vertical_alignment = 1
