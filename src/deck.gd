@@ -13,12 +13,11 @@ func _ready() -> void:
 		var card = preload("res://src/card.tscn").instantiate()
 		cards.append(card)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	lab.text = str(cards.size())
 	
 	if Input.is_action_just_pressed("ui_accept"):
 		distribution_cards()
-		
 
 func distribution_cards() -> void:
 	if cards.size() > 0 and Hand.hand_cards.size() < Hand.hand_size_max:
